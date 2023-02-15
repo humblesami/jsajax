@@ -1,15 +1,15 @@
 ## In test mode:
 Totally free, totally open, no conditions applied, no guarantees for anything yet
 ### Installation
-`npm install ajax-json-http-clinet`
+`npm install json-http-client`
 
 or
 
-`yarn add ajax-json-http-clinet`
+`yarn add json-http-client`
 ### Usage
 
 ```js
-import AjaxClient from '@samiciit/ajax-json-http-clinet'
+import AjaxClient from '@samiciit/json-http-client'
 
 async my_async_method(){
     let ajax_client = new AjaxClient();

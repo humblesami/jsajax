@@ -35,6 +35,6 @@
         }
     },
     "dependencies": {
-        "json-http-client": "^1.0.0"
+        "json-http-client": "^1.0.2"
     }
 }

@@ -19,22 +19,8 @@
     "engines": {
         "node": ">=4"
     },
-    "scripts": {},
     "keywords": [
         "ajax",
         "httprequest"
-    ],
-    "verb": {
-        "toc": false,
-        "layout": "default",
-        "tasks": [
-            "readme"
-        ],
-        "lint": {
-            "reflinks": true
-        }
-    },
-    "dependencies": {
-        "json-http-client": "^1.0.2"
-    }
+    ]
 }

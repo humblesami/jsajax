@@ -1,0 +1,9 @@
+{
+    "name": "ajaxhandler",
+    "version": "1.0",
+    "author": "sami",
+    "private": true,
+    "dependencies": {},
+    "scripts": {"./ajax.js"},
+    "meta": {}
+}

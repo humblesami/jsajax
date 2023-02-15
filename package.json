@@ -1,7 +1,7 @@
 {
     "name": "json-http-client",
     "description": "Beta version: Completely handled http request to receive and send json data to/from server",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "homepage": "https://github.com/humblesami/jsajax",
     "author": "Sami Akram (https://github.com/humblesami)",
     "contributors": [

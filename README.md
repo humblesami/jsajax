@@ -1,21 +1,14 @@
-Totally free
-
-Totally Open
-
-No conditions applied
-
-
-#Installation
-
-npm install @samiciit/ajax-json-http-clinet
+## In test mode:
+Totally free, totally open, no conditions applied, no guarantees for anything yet
+### Installation
+`npm install ajax-json-http-clinet`
 
 or
 
-yarn add @samiciit/ajax-json-http-clinet
+`yarn add ajax-json-http-clinet`
+### Usage
 
-
-#Usage
-
+```js
 import AjaxClient from '@samiciit/ajax-json-http-clinet'
 
 async my_async_method(){
@@ -23,5 +16,5 @@ async my_async_method(){
     let resp = await ajax_client.ping('https://google.com');
     //will handle and show status => failed if your network connection failed
     console.log(resp.status);
-}
-
+}`
+```

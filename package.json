@@ -1,13 +1,13 @@
 {
-    "name": "ajax-json-http-clinet",
-    "description": "Completely handled http request to receive and send json data to/from server",
-    "version": "1.0.1",
+    "name": "ajax-json-http-client",
+    "description": "Beta version: Completely handled http request to receive and send json data to/from server",
+    "version": "1.0.0",
     "homepage": "https://github.com/humblesami/jsajax",
     "author": "Sami Akram (https://github.com/humblesami)",
     "contributors": [
         "Sami"
     ],
-    "repository": "jonschlinkert/is-odd",
+    "repository": "umblesami/jsajax",
     "bugs": {
         "url": "https://github.com/humblesami/jsajax/issues"
     },
@@ -19,11 +19,9 @@
     "engines": {
         "node": ">=4"
     },
-    "scripts": {
-    },
+    "scripts": {},
     "dependencies": {
-    },
-    "devDependencies": {
+        "ajax-json-http-clinet": "^1.0.1"
     },
     "keywords": [
         "ajax",

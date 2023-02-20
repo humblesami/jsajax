@@ -1,5 +1,8 @@
 export default class AjaxClient {
-    constructor(api_base_url, time_limit=0, composer){
+    composer: any;
+    fetch_timeout: number;
+    api_server_url: string;
+    constructor(api_base_url: string, time_limit=0, composer:any){
         if(!time_limit){
             time_limit = 20;
         }
@@ -23,11 +26,11 @@ export default class AjaxClient {
         this.composer = composer;
     }
 
-    async set_headers(fetch_options, headers){
+    async set_headers(fetch_options: any, headers: any){
         fetch_options.headers = headers;
     }
 
-    async on_api_response(res_type, endpoint, message=''){
+    async on_api_response(res_type:string, endpoint:string, message=''){
         console.log('Api response => '+ res_type, this.api_server_url+ endpoint, message);
         if(res_type == 'success'){
             this.composer.on_api_success(endpoint, message);
@@ -40,7 +43,7 @@ export default class AjaxClient {
         }
     }
 
-    async fetch_request(endpoint, method, req_data, headers={}, time_limit=0) {
+    async fetch_request(endpoint:string, method: string, req_data:any, headers={}, time_limit=0) {
         let obj_this = this;
         let api_base_url = this.api_server_url;
         let server_endpoint = api_base_url + endpoint;
@@ -54,6 +57,9 @@ export default class AjaxClient {
         this.composer.on_api_request_init(endpoint, max_request_wait);
         method = method.toLowerCase();
         let fetch_options = {
+            headers: {},
+            method: 'get',
+            body: undefined,
             signal: abort_controller.signal
         };
         if(Object.keys(headers).length){
@@ -74,8 +80,7 @@ export default class AjaxClient {
             fetch_options.body = JSON.stringify(req_data);
         }
 
-
-        return fetch(server_endpoint, fetch_options).then((api_response)=>{
+        return fetch(server_endpoint, fetch_options).then((api_response:any)=>{
             if(!api_response.status){
                 if(api_response.detail)
                 {
@@ -89,6 +94,7 @@ export default class AjaxClient {
                 }
                 return raw_result;
             }
+            console.log()
             if(api_response.status == 200){
                 if(method == 'ping'){
                     return {status: 'ok'}
@@ -114,7 +120,6 @@ export default class AjaxClient {
         }).catch(er_not_accessible => {
             clearTimeout(timeoutId);
             er_not_accessible = '' + er_not_accessible;
-            raw_result.message = 'Error in fetch => ' + er_not_accessible;
             raw_result.status = 'failed';
             if(er_not_accessible.indexOf('AbortError') > -1){
                 raw_result.message = ('Timed out after '+ (obj_this.fetch_timeout)+ ' seconds');
@@ -131,6 +136,9 @@ export default class AjaxClient {
                     raw_result.code = 500;
                 }
             }
+            else{
+                raw_result.message = 'Error in fetch => ' + er_not_accessible;
+            }
             this.on_api_response('failed', endpoint, raw_result.message);
             return raw_result;
         }).catch(on_error=>{
@@ -143,7 +151,7 @@ export default class AjaxClient {
         });
     }
 
-    format_result(endpoint, processed_result){
+    format_result(endpoint:string, processed_result:any){
         if(processed_result.status == 'success'){
             processed_result.status = 'ok';
         }
@@ -169,19 +177,19 @@ export default class AjaxClient {
         return processed_result;
     }
 
-    set_server_url(server_url){
+    set_server_url(server_url:string){
         this.api_server_url = server_url;
     }
 
-    async ping(url, max_time=0){
+    async ping(url:string, max_time=0){
         return this.fetch_request(url, 'ping', {}, max_time);
     }
 
-    async get_data(endpoint, req_data={}, headers={}, max_time=0){
+    async get_data(endpoint:string, req_data={}, headers={}, max_time=0){
         return this.fetch_request(endpoint, 'GET', req_data, headers, max_time);
     }
 
-    async post_data(endpoint, req_data={files:[]}, headers={}, max_time=0){
+    async post_data(endpoint:string, req_data={files:[]}, headers={}, max_time=0){
         try{
             if(req_data && req_data.files){
                 let form_data = new FormData();

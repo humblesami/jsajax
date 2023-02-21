@@ -67,7 +67,7 @@ export default class AjaxClient {
         }
         if(method == 'ping'){
             server_endpoint = endpoint;
-            fetch_options.method = 'get';
+            method = 'get';
         }
         else
         {
@@ -75,8 +75,10 @@ export default class AjaxClient {
         }
         if(method == 'get'){
             server_endpoint += '?data='+JSON.stringify(req_data);
+            delete fetch_options['body'];
         }
         else{
+            fetch_options.method = 'post';
             fetch_options.body = JSON.stringify(req_data);
         }
 
@@ -118,9 +120,10 @@ export default class AjaxClient {
             }
             return processed_result;
         }).catch(er_not_accessible => {
-            clearTimeout(timeoutId);
-            er_not_accessible = '' + er_not_accessible;
             raw_result.status = 'failed';
+            er_not_accessible = '' + er_not_accessible;
+            raw_result.message = '\nDetail: Failed to fetch => ' +er_not_accessible;
+            clearTimeout(timeoutId);
             if(er_not_accessible.indexOf('AbortError') > -1){
                 raw_result.message = ('Timed out after '+ (obj_this.fetch_timeout)+ ' seconds');
                 raw_result.code = 513;
@@ -129,15 +132,12 @@ export default class AjaxClient {
             {
                 raw_result.message = 'Network request failed to reach';
             }
-            else if(er_not_accessible.indexOf('JSON Parse error')){
+            else if(er_not_accessible.indexOf('JSON Parse error')> -1){
                 raw_result.message = ('Api response is not a valid json');
                 if(!raw_result.code)
                 {
                     raw_result.code = 500;
                 }
-            }
-            else{
-                raw_result.message = 'Error in fetch => ' + er_not_accessible;
             }
             this.on_api_response('failed', endpoint, raw_result.message);
             return raw_result;

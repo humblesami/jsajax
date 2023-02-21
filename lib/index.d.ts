@@ -1,4 +1,4 @@
-class AjaxClient {
+class AjaxClient{
     composer: any;
     fetch_timeout: number;
     api_server_url: string;
@@ -28,19 +28,6 @@ class AjaxClient {
 
     async set_headers(fetch_options: any, headers: any){
         fetch_options.headers = headers;
-    }
-
-    async on_api_response(res_type:string, endpoint:string, message=''){
-        console.log('Api response => '+ res_type, this.api_server_url+ endpoint, message);
-        if(res_type == 'success'){
-            this.composer.on_api_success(endpoint, message);
-        }
-        else if(res_type == 'error'){
-            this.composer.on_api_error(endpoint, message);
-        }
-        if(res_type == 'failed'){
-            this.composer.on_api_failed(endpoint, message);
-        }
     }
 
     async fetch_request(endpoint:string, method: string, req_data:any, headers={}, time_limit=0) {
@@ -151,6 +138,19 @@ class AjaxClient {
         });
     }
 
+    on_api_response(res_type:string, endpoint:string, message=''){
+        console.log('Api response => '+ res_type, this.api_server_url+ endpoint, message);
+        if(res_type == 'success'){
+            this.composer.on_api_success(endpoint, message);
+        }
+        else if(res_type == 'error'){
+            this.composer.on_api_error(endpoint, message);
+        }
+        if(res_type == 'failed'){
+            this.composer.on_api_failed(endpoint, message);
+        }
+    }
+
     format_result(endpoint:string, processed_result:any){
         if(processed_result.status == 'success'){
             processed_result.status = 'ok';
@@ -209,5 +209,4 @@ class AjaxClient {
         }
     }
 }
-
-export {AjaxClient};
+export {AjaxClient}

@@ -1,4 +1,4 @@
-export default class AjaxClient {
+class AjaxClient {
     composer: any;
     fetch_timeout: number;
     api_server_url: string;
@@ -209,3 +209,5 @@ export default class AjaxClient {
         }
     }
 }
+
+export default {AjaxClient}

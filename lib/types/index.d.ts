@@ -6,7 +6,7 @@ class AjaxClient{
         if(!time_limit){
             time_limit = 20;
         }
-        this.api_server_url = api_base_url;
+        this.api_server_url = api_base_url || '';
         this.fetch_timeout = time_limit;
         let composer_template = {
             on_api_request_init: function(){},
@@ -36,7 +36,7 @@ class AjaxClient{
         let server_endpoint = api_base_url + endpoint;
         let raw_result = {
             status: 'failed', code: 512, message: 'No result',
-            server_endpoint: server_endpoint, endpoint: endpoint.substr(1)
+            server_endpoint: server_endpoint, endpoint: obj_this.refined_end_point(endpoint),
         }
         const abort_controller = new AbortController();
         let max_request_wait = (time_limit ? time_limit : obj_this.fetch_timeout) * 1000;
@@ -166,15 +166,20 @@ class AjaxClient{
             if(!processed_result.message){
                 processed_result.message = 'Invalid response';
             }
-            processed_result.message += ' in => '+ endpoint.substr(1);
+            processed_result.message += ' in => '+ this.refined_end_point(endpoint);
             processed_result.status = 'error';
         }
         else{
             if(processed_result.message == 'No result'){
-                processed_result.message = "Success at " + endpoint.substr(1);
+                processed_result.message = "Success at " + this.refined_end_point(endpoint);
             }
         }
         return processed_result;
+    }
+
+    refined_end_point(endpoint:string){
+        endpoint = endpoint || '/';
+        return endpoint.substr(1) ? endpoint.startsWith('/') : endpoint;
     }
 
     set_server_url(server_url:string){

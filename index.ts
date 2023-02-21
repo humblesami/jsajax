@@ -210,4 +210,4 @@ class AjaxClient {
     }
 }
 
-export default {AjaxClient}
+export {AjaxClient};

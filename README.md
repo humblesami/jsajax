@@ -53,5 +53,7 @@ function async_my_api_call(){
     console.log(resp.status);
 }
 
+To publish your own package
+npm publish --access public
 
 ```
